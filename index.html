@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Valentine’s Day</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: pink;
+            text-align: center;
+            font-family: "Poppins", sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            display: inline-block;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            margin-top: 50px;
+            position: relative;
+            z-index: 10;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeIn 1.5s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        h1 {
+            color: red;
+            font-family: "Dancing Script", cursive;
+            font-size: 36px;
+            opacity: 0;
+            animation: slideDown 1s ease-out 0.5s forwards;
+        }
+        @keyframes slideDown {
+            0% { opacity: 0; transform: translateY(-30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .message {
+            font-size: 18px;
+            color: #444;
+            margin-top: 10px;
+            border-right: 3px solid red;
+            white-space: nowrap;
+            overflow: hidden;
+            display: inline-block;
+            opacity: 0;
+            animation: typing 3s steps(30) 1s forwards, blink 0.8s infinite;
+        }
+        @keyframes typing {
+            0% { width: 0; opacity: 1; }
+            100% { width: 100%; opacity: 1; }
+        }
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+        .btn {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            width: 200px;
+            margin: 10px auto;
+            transition: 0.3s;
+            font-family: "Poppins", sans-serif;
+            transform: scale(1);
+        }
+        .btn:hover {
+            background: darkred;
+            transform: scale(1.1);
+        }
+        .hidden {
+            display: none;
+        }
+
+        /* Hati yang bergerak */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .heart-anim {
+            position: absolute;
+            color: red;
+            font-size: 24px;
+            opacity: 0.7;
+            animation: floatUp 5s infinite linear;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        /* Love yang mendebar */
+        .pulsing-heart {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 120px;
+            color: rgba(255, 0, 0, 0.2);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.2; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.3; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 0.2; }
+        }
+
+        /* Watermark */
+        .watermark {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+            color: #fff;
+            opacity: 0.7;
+            font-family: "Poppins", sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <audio id="valentineMusic" autoplay loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
+        Maaf, browser kamu tidak mendukung audio.
+    </audio>
+
+    <div class="hearts-container"></div>
+    <div class="pulsing-heart">❤️</div>
+
+    <div class="card">
+        <h1>💖 Happy Valentine’s Day 💖</h1>
+        <p class="message">Aku sayang kamu! Semoga hari ini penuh cinta dan kebahagiaan 💕</p>
+
+        <button class="btn" onclick="changeMessage()">Klik Aku!</button>
+        <button class="btn" onclick="showLove()">Aku Cinta Kamu</button>
+        <button class="btn" onclick="sendLove()">Kirim Ke Kamu</button>
+
+        <p id="hiddenMessage" class="hidden">💖 Aku akan selalu ada buat kamu! 💖</p>
+    </div>
+
+    <div class="watermark">Made by Zaky © 2025</div>
+
+    <script>
+        function changeMessage() {
+            document.querySelector('.message').innerHTML = "Kamu spesial banget! 💖";
+        }
+
+        function showLove() {
+            document.getElementById('hiddenMessage').classList.toggle('hidden');
+        }
+
+        function sendLove() {
+            alert("Cintaku sudah terkirim buat kamu! 💘");
+        }
+
+        window.onload = function() {
+            document.getElementById("valentineMusic").play().catch(() => {
+                console.log("Autoplay diblokir, user harus interaksi dulu.");
+            });
+            generateHearts();
+        };
+
+        function generateHearts() {
+            const container = document.querySelector('.hearts-container');
+            for (let i = 0; i < 20; i++) {
+                let heart = document.createElement('div');
+                heart.classList.add('heart-anim');
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                container.appendChild(heart);
+                setTimeout(() => heart.remove(), 5000);
+            }
+            setTimeout(generateHearts, 1000);
+        }
+    </script>
+</body>
+</html>
